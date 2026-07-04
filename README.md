@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Swarup's Portfolio 2026 🚀
 
-## Getting Started
+> A highly interactive, immersive, and premium personal portfolio built with Next.js, Framer Motion, and Tailwind CSS.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-black?style=for-the-badge&logo=framer)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Welcome to my 2026 digital portfolio! This repository contains the source code for my personal website, meticulously crafted to showcase my skills as a Software Engineer and Designer. The site features smooth page transitions, custom cursor-driven interactions, and premium scroll-triggered parallax layouts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** Next.js 15 (App Router)
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Language:** TypeScript / React 19
+- **Deployment:** Vercel
 
-## Learn More
+## ✨ Key Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Dynamic Interactive Grid:** Custom dotted backgrounds that respond and magnify based on mouse proximity.
+- **Scroll Parallax:** Multi-layer section overlapping with deep CSS clip-path transitions.
+- **Fluid Typography:** Wave animations on text and precision kerning for perfect visual balance.
+- **Glassmorphism UI:** Frosted glass menus and custom animated hamburger layouts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To get a local copy up and running, follow these simple steps.
 
-## Deploy on Vercel
+### Prerequisites
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Node.js (v18 or higher)
+- npm or yarn
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/swarup081/portfolio2026.git
+   ```
+2. Navigate to the directory:
+   ```sh
+   cd portfolio2026
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+5. Open your browser to `http://localhost:3000`
+
+## 🤝 Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+Please refer to our [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📫 Contact
+
+Swarup Das - dasswarup112233@gmail.com
+
+Project Link: [https://github.com/swarup081/portfolio2026](https://github.com/swarup081/portfolio2026)

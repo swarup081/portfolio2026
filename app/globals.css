@@ -24,3 +24,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes lineWave {
+  0% { transform: translateX(0); opacity: 1; }
+  40% { transform: translateX(12px); opacity: 0; }
+  50% { transform: translateX(-12px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.group:hover .line-wave-1 {
+  animation: lineWave 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.group:hover .line-wave-2 {
+  animation: lineWave 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}

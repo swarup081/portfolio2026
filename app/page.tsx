@@ -1,13 +1,14 @@
 "use client";
 
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll, useInView, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll, useInView, useMotionValueEvent, useAnimation } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Menu from "./components/Menu";
 import AboutMenu from "./components/AboutMenu";
 
-const MagnifyingChar = ({ children, index, mouseX, mouseY, delayOffset, waveIndex }: any) => {
+const MagnifyingChar = ({ children, index, mouseX, mouseY, delayOffset, waveKey }: any) => {
   const ref = useRef<HTMLSpanElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const controls = useAnimation();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -27,29 +28,30 @@ const MagnifyingChar = ({ children, index, mouseX, mouseY, delayOffset, waveInde
     return Math.sqrt(dx * dx + dy * dy);
   });
 
-  const scaleRaw = useTransform(distance, [0, 150], [1.18, 1], { clamp: true });
-  const mxRaw = useTransform(distance, [0, 150], [4, 0], { clamp: true });
+  useEffect(() => {
+    if (waveKey > 0 && distance.get() > 150) {
+      controls.start({
+        scaleY: [1, 1.12, 1],
+        transition: {
+          delay: (delayOffset + index) * 0.06,
+          duration: 0.6,
+          ease: "easeInOut",
+        }
+      });
+    }
+  }, [waveKey, controls, index, delayOffset, distance]);
+
+  const scaleRaw = useTransform(distance, [0, 150], [1.12, 1], { clamp: true });
+  const mxRaw = useTransform(distance, [0, 150], [3, 0], { clamp: true });
 
   const scale = useSpring(scaleRaw, { stiffness: 300, damping: 20 });
   const mx = useSpring(mxRaw, { stiffness: 300, damping: 20 });
-
-  const waveVariants = {
-    initial: { scaleY: 1 },
-    animate: {
-      scaleY: [1, 1.3, 1],
-      transition: {
-        duration: 0.6,
-        ease: "easeInOut",
-      }
-    }
-  };
 
   return (
     <motion.span
       ref={ref}
       style={{ scale, marginInline: mx, display: "inline-block", originY: "bottom" }}
-      variants={waveVariants}
-      animate={waveIndex === index ? "animate" : "initial"}
+      animate={controls}
       className="inline-block"
     >
       {children}
@@ -60,24 +62,13 @@ const MagnifyingChar = ({ children, index, mouseX, mouseY, delayOffset, waveInde
 export default function Home() {
   const [phase, setPhase] = useState(0);
   const [menuPhase, setMenuPhase] = useState(0);
-  const [waveIndex1, setWaveIndex1] = useState(-1);
-  const [waveIndex2, setWaveIndex2] = useState(-1);
+  const [waveKey, setWaveKey] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isAboutMenuOpen, setIsAboutMenuOpen] = useState(false);
 
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(-1000);
-    mouseY.set(-1000);
-  };
-
+  
   // Yellow section mouse tracking for hover dots
   const yellowMouseX = useMotionValue(-1000);
   const yellowMouseY = useMotionValue(-1000);
@@ -87,15 +78,37 @@ export default function Home() {
   const darkMouseY = useMotionValue(-1000);
 
   const handlePageMouseMove = (e: React.MouseEvent) => {
-    if (yellowSectionRef.current) {
-      const yellowRect = yellowSectionRef.current.getBoundingClientRect();
-      yellowMouseX.set(e.clientX - yellowRect.left);
-      yellowMouseY.set(e.clientY - yellowRect.top);
+    // Top Hero area check
+    if (e.clientY < window.innerHeight) {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    } else {
+      mouseX.set(-1000);
+      mouseY.set(-1000);
     }
-    if (darkSectionRef.current) {
-      const darkRect = darkSectionRef.current.getBoundingClientRect();
-      darkMouseX.set(e.clientX - darkRect.left);
-      darkMouseY.set(e.clientY - darkRect.top);
+
+    // Yellow area check
+    const isOverYellow = yellowSectionRef.current &&
+      e.clientY >= yellowSectionRef.current.getBoundingClientRect().top &&
+      e.clientY <= yellowSectionRef.current.getBoundingClientRect().bottom;
+
+    if (isOverYellow) {
+      yellowMouseX.set(e.clientX);
+      yellowMouseY.set(e.clientY);
+    } else {
+      yellowMouseX.set(-1000);
+      yellowMouseY.set(-1000);
+    }
+
+    // Dark area check
+    const isOverDark = e.clientY > window.innerHeight * 2;
+    if (isOverDark) {
+      const topOfDark = window.innerHeight * 2;
+      darkMouseX.set(e.clientX);
+      darkMouseY.set(e.clientY - topOfDark);
+    } else {
+      darkMouseX.set(-1000);
+      darkMouseY.set(-1000);
     }
   };
 
@@ -125,18 +138,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const triggerWave = () => {
-      const idx1 = Math.floor(Math.random() * 8);
-      setWaveIndex1(idx1);
-      setTimeout(() => {
-        const idx2 = Math.floor(Math.random() * 9);
-        setWaveIndex2(idx2);
-      }, 300);
-      timeout = setTimeout(triggerWave, 15000);
-    };
-    timeout = setTimeout(triggerWave, 4000);
-    return () => clearTimeout(timeout);
+    const interval = setInterval(() => {
+      setWaveKey((prev) => prev + 1);
+    }, 6000);
+    return () => clearInterval(interval);
   }, []);
 
   // Scroll tracking for shutter reveal
@@ -272,8 +277,6 @@ export default function Home() {
             <motion.section
               style={{ y: heroY }}
               className="sticky top-0 flex justify-center h-screen w-full overflow-hidden z-10 pointer-events-auto"
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
             >
               <main className="relative flex flex-col items-center justify-center min-h-screen w-full max-w-[88vw] xl:max-w-[1350px] border-x border-[#b3b3b3]">
 
@@ -320,21 +323,21 @@ export default function Home() {
                             className="flex flex-col items-center justify-center leading-[0.85] pb-2 flex-shrink-0 pointer-events-auto cursor-pointer"
                           >
                             <h1
-                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.04em] uppercase text-[#151515] ml-[0.04em] flex"
+                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#151515] ml-[0.04em] flex"
                               style={{ fontFamily: "'Trobika', sans-serif" }}
                             >
                               {title1.map((char, index) => (
-                                <MagnifyingChar key={index} index={index} mouseX={mouseX} mouseY={mouseY} delayOffset={0}>
+                                <MagnifyingChar key={index} index={index} mouseX={mouseX} mouseY={mouseY} delayOffset={0} waveKey={waveKey}>
                                   {char === " " ? "\u00A0" : char}
                                 </MagnifyingChar>
                               ))}
                             </h1>
                             <h1
-                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-tighter uppercase text-[#151515] flex"
+                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#151515] mr-[0.04em] flex"
                               style={{ fontFamily: "'Trobika', sans-serif" }}
                             >
                               {title2.map((char, index) => (
-                                <MagnifyingChar key={index} index={index} mouseX={mouseX} mouseY={mouseY} delayOffset={title1.length}>
+                                <MagnifyingChar key={index} index={index} mouseX={mouseX} mouseY={mouseY} delayOffset={8} waveKey={waveKey}>
                                   {char === " " ? "\u00A0" : char}
                                 </MagnifyingChar>
                               ))}
@@ -556,10 +559,10 @@ export default function Home() {
             <div className="absolute top-8 right-6 md:right-12 lg:right-20 z-40">
               <button
                 onClick={() => setIsAboutMenuOpen(true)}
-                className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex flex-col justify-center items-center gap-[4px] cursor-pointer hover:bg-white/10 hover:scale-110 transition-all duration-300 group"
+                className="w-10 h-10 bg-transparent rounded-full flex flex-col justify-center items-center gap-[4px] cursor-pointer hover:scale-110 transition-all duration-300 group"
               >
-                <div className="w-[18px] h-[1.5px] bg-white transition-all duration-300 group-hover:-translate-y-[2px]"></div>
-                <div className="w-[18px] h-[1.5px] bg-white transition-all duration-300 group-hover:translate-y-[2px]"></div>
+                <div className="w-[20px] h-[1.5px] bg-white transition-transform duration-300 group-hover:-translate-x-1"></div>
+                <div className="w-[20px] h-[1.5px] bg-white transition-transform duration-300 group-hover:translate-x-1"></div>
               </button>
             </div>
 
