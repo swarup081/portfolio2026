@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const curveVariants = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const curveVariants: any = {
     initial: {
       d: "M 0 100 Q 50 100 100 100 L 100 100 L 0 100 Z"
     },

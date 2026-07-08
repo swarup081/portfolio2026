@@ -1,11 +1,14 @@
 "use client";
 
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll, useInView, useMotionValueEvent, useAnimation } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useAnimation, AnimatePresence, useMotionValue, useSpring, useMotionValueEvent } from "framer-motion";
 import Menu from "./components/Menu";
 import AboutMenu from "./components/AboutMenu";
+import Stats from "./components/Stats";
+import SuccessStories from "./components/SuccessStories";
 
-const MagnifyingChar = ({ children, index, mouseX, mouseY, delayOffset, waveKey }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function MagnifyingChar({ children, index, mouseX, mouseY, delayOffset, waveKey }: any) {
   const ref = useRef<HTMLSpanElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const controls = useAnimation();
@@ -217,7 +220,7 @@ export default function Home() {
         <div className="w-full h-full max-w-[88vw] xl:max-w-[1350px] border-x border-[#b3b3b3]" />
       </div>
 
-      <div className="fixed right-0 top-1/2 -translate-y-1/2 bg-[#151515] text-white w-10 py-6 rounded-l-lg z-50 flex flex-col items-center justify-center gap-6 shadow-xl hidden md:flex border border-r-0 border-white/10">
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 bg-[#151515] text-white w-10 py-6 rounded-l-lg z-50 flex flex-col items-center justify-center gap-6 shadow-xl hidden md:flex border-[1.5px] border-r-0 border-white/40">
         <div className="relative group flex items-center justify-center cursor-pointer" onClick={() => {
           navigator.clipboard.writeText("dasswarup112233@gmail.com");
           setCopied(true);
@@ -276,9 +279,10 @@ export default function Home() {
           <div className="absolute inset-0 h-full w-full pointer-events-none">
             <motion.section
               style={{ y: heroY }}
-              className="sticky top-0 flex justify-center h-screen w-full overflow-hidden z-10 pointer-events-auto"
+              className="sticky top-0 flex flex-col justify-start h-screen w-full z-10 pointer-events-auto"
             >
-              <main className="relative flex flex-col items-center justify-center min-h-screen w-full max-w-[88vw] xl:max-w-[1350px] border-x border-[#b3b3b3]">
+              {/* Part 1: Main Title Area (100vh) */}
+              <div className="relative flex flex-col items-center justify-center h-[100vh] min-h-[800px] w-full max-w-[88vw] xl:max-w-[1350px] mx-auto border-x border-[#b3b3b3]">
 
                 <div className="absolute w-full px-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
                   <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center w-full">
@@ -450,7 +454,11 @@ export default function Home() {
                   </div>
                 </div>
 
-              </main>
+                {/* Stats Area absolutely positioned near bottom */}
+                <Stats scrollYProgress={scrollYProgress} />
+
+              </div>
+
             </motion.section>
           </div>
 
@@ -593,11 +601,11 @@ export default function Home() {
                   className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full gap-6"
                 >
                   <h2 className="text-[11.5vw] lg:text-[95px] xl:text-[125px] leading-[0.8] tracking-normal uppercase whitespace-nowrap text-white" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
-                    HI ! I'M SWARUP
+                    HI ! I&apos;M SWARUP
                   </h2>
                   <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pl-6">
                     <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
-                      I've been in the software industry crafting digital products that are useful & enjoyable for the final users.
+                      I&apos;ve been in the software industry crafting digital products that are useful & enjoyable for the final users.
                     </p>
                   </div>
                 </motion.div>
@@ -613,7 +621,7 @@ export default function Home() {
               >
                 <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pr-6">
                   <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
-                    I've worked on ambitious projects bringing design aesthetics with coding finesse to life, currently studying at NIT Silchar.
+                    I&apos;ve worked on ambitious projects bringing design aesthetics with coding finesse to life, currently studying at NIT Silchar.
                   </p>
                 </div>
                 <h2 className="text-[11.5vw] lg:text-[95px] xl:text-[125px] leading-[0.8] tracking-normal uppercase whitespace-nowrap text-white" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom right" }}>
@@ -625,6 +633,9 @@ export default function Home() {
 
           </main>
         </motion.section>
+
+        {/* SECTION 4: Success Stories (Accordion) */}
+        <SuccessStories />
 
       </div>
     </div>
