@@ -152,9 +152,9 @@ export default function Home() {
   // 0 to 0.1: Hero scrolls up naturally (30vh gap).
   // 0.1 to 0.433: Rigid pyramid shape slides up (moves 100vh over 100vh of scroll, perfectly tracking).
   // 0.433 to 0.5: Pyramid flattens out to fill the screen.
-  const centerOffset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["100vh", "100vh", "0vh", "0vh", "0vh"]);
-  const level2Offset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["107vh", "107vh", "7vh", "0vh", "0vh"]);
-  const level1Offset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["118vh", "118vh", "18vh", "0vh", "0vh"]);
+  const centerOffset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["100vh", "100vh", "0vh", "-5vh", "-5vh"]);
+  const level2Offset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["107vh", "107vh", "7vh", "-5vh", "-5vh"]);
+  const level1Offset = useTransform(scrollYProgress, [0, 0.1, 0.433, 0.5, 1], ["118vh", "118vh", "18vh", "-5vh", "-5vh"]);
 
   // Hero scrolls at normal scroll speed for the entire wrapper duration
   const heroY = useTransform(scrollYProgress, [0, 1], ["0vh", "-300vh"]);
@@ -211,7 +211,7 @@ export default function Home() {
 
       <div className="fixed right-0 top-1/2 -translate-y-1/2 bg-[#151515] text-white w-10 py-6 rounded-l-lg z-50 flex flex-col items-center justify-center gap-6 shadow-xl hidden md:flex border-[1.5px] border-r-0 border-white/40">
         <div className="relative group flex items-center justify-center cursor-pointer" onClick={() => {
-          navigator.clipboard.writeText("dasswarup112233@gmail.com");
+          navigator.clipboard.writeText("dasswarup.work@gmail.com");
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
         }}>
@@ -219,7 +219,7 @@ export default function Home() {
 
           <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 flex items-center">
             <div className="bg-[#151515] text-white text-xs whitespace-nowrap px-4 py-2 rounded-lg border border-white/10 shadow-lg flex flex-col gap-1 items-end">
-              <span className="font-medium text-[13px]" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>dasswarup112233@gmail.com</span>
+              <span className="font-medium text-[13px]" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>dasswarup.work@gmail.com</span>
               <span className="text-white/60 text-[9px] uppercase tracking-wider">{copied ? "Copied!" : "Click to copy"}</span>
             </div>
             <div className="w-0 h-0 border-y-[6px] border-y-transparent border-l-[6px] border-l-[#151515] border-l-white/10 ml-[-1px]"></div>
@@ -313,10 +313,10 @@ export default function Home() {
                             initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
                             animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="flex flex-col items-center justify-center leading-[0.85] pb-2 flex-shrink-0 pointer-events-auto cursor-pointer"
+                            className="flex flex-col items-center justify-center leading-[0.85] pb-2 flex-shrink-0 pointer-events-auto cursor-pointer relative z-10"
                           >
                             <h1
-                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#151515] ml-[0.04em] flex"
+                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#000000] ml-[0.04em] flex"
                               style={{ fontFamily: "'Trobika', sans-serif" }}
                             >
                               {title1.map((char, index) => (
@@ -326,7 +326,7 @@ export default function Home() {
                               ))}
                             </h1>
                             <h1
-                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#151515] mr-[0.04em] flex"
+                              className="text-[12.5vw] md:text-[8.5vw] lg:text-[95px] font-bold tracking-[0.02em] uppercase text-[#000000] mr-[0.04em] flex"
                               style={{ fontFamily: "'Trobika', sans-serif" }}
                             >
                               {title2.map((char, index) => (
