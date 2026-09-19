@@ -184,6 +184,9 @@ export default function Home() {
   const title1 = "SWARUP'S".split("");
   const title2 = "PORTFOLIO".split("");
 
+  const leftSideText = "Computer Science Engineer".split("");
+  const rightSideText = "Studying at NIT Silchar".split("");
+
   return (
     <div
       className="relative w-full bg-[#F5F2EB] text-[#111111] font-sans flex flex-col"
@@ -278,8 +281,29 @@ export default function Home() {
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 2.2, ease: "easeInOut" }}
-                        className="h-[1px] bg-[#b3b3b3] flex-grow origin-left min-w-[10px]"
+                        className="h-[1px] bg-[#b3b3b3] flex-grow origin-left min-w-[10px] hidden xl:block"
                       />
+                      <div
+                        className={`relative flex-shrink-0 hidden xl:block overflow-hidden h-[40px] transition-[width,opacity] duration-[1500ms] delay-[200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${phase === 1 ? "w-[320px] opacity-100" : "w-0 opacity-0"
+                          }`}
+                      >
+                        <div
+                          className="absolute right-0 top-1/2 -translate-y-1/2 w-[320px] pr-8 text-right whitespace-nowrap text-[#333] text-xl font-medium tracking-tight"
+                          style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
+                        >
+                          {leftSideText.map((char, i) => (
+                            <motion.span
+                              key={i}
+                              initial={{ y: 20, opacity: 0 }}
+                              animate={{ y: phase === 1 ? 0 : 20, opacity: phase === 1 ? 1 : 0 }}
+                              transition={{ duration: 0.6, delay: 0.4 + (leftSideText.length - 1 - i) * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                              className="inline-block"
+                            >
+                              {char === " " ? "\u00A0" : char}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
 
                     <div className={`flex items-center justify-center transition-all duration-1000 ${phase === 0 ? "w-[250px]" : "w-auto px-2 md:px-4"}`}>
@@ -317,11 +341,32 @@ export default function Home() {
                     </div>
 
                     <div className="flex items-center justify-start w-full min-w-0">
+                      <div
+                        className={`relative flex-shrink-0 hidden xl:block overflow-hidden h-[40px] transition-[width,opacity] duration-[1500ms] delay-[200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${phase === 1 ? "w-[320px] opacity-100" : "w-0 opacity-0"
+                          }`}
+                      >
+                        <div
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-[320px] pl-8 text-left whitespace-nowrap text-[#333] text-xl font-medium tracking-tight"
+                          style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
+                        >
+                          {rightSideText.map((char, i) => (
+                            <motion.span
+                              key={i}
+                              initial={{ y: 20, opacity: 0 }}
+                              animate={{ y: phase === 1 ? 0 : 20, opacity: phase === 1 ? 1 : 0 }}
+                              transition={{ duration: 0.6, delay: 0.4 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                              className="inline-block"
+                            >
+                              {char === " " ? "\u00A0" : char}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </div>
                       <motion.div
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 2.2, ease: "easeInOut" }}
-                        className="h-[1px] bg-[#b3b3b3] flex-grow origin-right min-w-[10px]"
+                        className="h-[1px] bg-[#b3b3b3] flex-grow origin-right min-w-[10px] hidden xl:block"
                       />
                     </div>
 
