@@ -76,7 +76,7 @@ export default function CuratedProjects() {
   }, []);
 
   return (
-    <section className="w-full bg-[#F5F2EB] text-[#111111] relative flex justify-center overflow-hidden">
+    <section id="work" className="w-full bg-[#F5F2EB] text-[#111111] relative flex justify-center overflow-hidden">
       <div className="w-full max-w-[88vw] xl:max-w-[1350px] mx-auto border-x border-[#b3b3b3] pt-20 md:pt-32 pb-12" ref={gridRef}>
         
         {/* Header */}
@@ -125,21 +125,22 @@ export default function CuratedProjects() {
               <div 
                 key={idx}
                 className={`w-full border-b border-[#b3b3b3] relative cursor-pointer group transition-colors duration-500 ease-out ${
-                  hoveredIndex === idx ? 'bg-[#111]' : 'bg-transparent'
+                  hoveredIndex === idx ? 'lg:bg-[#111] bg-transparent' : 'bg-transparent'
                 }`}
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => project.link && window.open(project.link, '_blank')}
               >
+                {/* Desktop Layout (Hidden on Mobile) */}
                 <div 
-                  className={`w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col lg:flex-row items-center justify-between px-6 md:px-12 lg:px-16 ${
-                    hoveredIndex === idx ? 'py-8 lg:py-10' : 'py-1 lg:py-1.5'
+                  className={`hidden lg:flex w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex-row items-center justify-between px-16 ${
+                    hoveredIndex === idx ? 'py-10' : 'py-1.5'
                   }`}
                 >
                   
                   {/* Left: Year & Category */}
-                  <div className="w-full lg:w-[30%] flex items-center justify-start z-10 mb-2 lg:mb-0 pointer-events-none shrink-0">
-                    <span className={`text-[11px] md:text-xs font-mono font-bold tracking-widest uppercase transition-colors duration-300 ${
+                  <div className="w-[30%] flex items-center justify-start z-10 pointer-events-none shrink-0">
+                    <span className={`text-xs font-mono font-bold tracking-widest uppercase transition-colors duration-300 ${
                       hoveredIndex === idx ? 'text-[#aaa]' : 'text-[#666]'
                     }`}>
                       {project.year}, {project.category}
@@ -147,11 +148,11 @@ export default function CuratedProjects() {
                   </div>
 
                   {/* Center: Hover Image & Title */}
-                  <div className="w-full lg:flex-1 flex justify-start items-center z-10 pointer-events-none">
+                  <div className="flex-1 flex justify-start items-center z-10 pointer-events-none">
                     <div className="flex items-center">
                       {/* Hover Image Reveal */}
                       <div 
-                        className="hidden lg:flex overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] items-center justify-start"
+                        className="flex overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] items-center justify-start"
                         style={{ 
                           width: hoveredIndex === idx ? '240px' : '0px', 
                           opacity: hoveredIndex === idx ? 1 : 0,
@@ -173,7 +174,7 @@ export default function CuratedProjects() {
                       </div>
                       
                       <h3 
-                        className={`text-4xl md:text-5xl lg:text-[48px] font-black leading-none transition-colors duration-300 tracking-tighter whitespace-nowrap ${
+                        className={`text-[48px] font-black leading-none transition-colors duration-300 tracking-tighter whitespace-nowrap ${
                           hoveredIndex === idx ? 'text-[#f5f5f5]' : 'text-[#111]'
                         }`} 
                         style={{ fontFamily: "'Aeonik TRIAL', sans-serif", transform: "scaleY(1.05)" }}
@@ -184,13 +185,44 @@ export default function CuratedProjects() {
                   </div>
 
                   {/* Right: Icon */}
-                  <div className="hidden lg:flex w-[10%] justify-end items-center z-10 pointer-events-none shrink-0">
+                  <div className="flex w-[10%] justify-end items-center z-10 pointer-events-none shrink-0">
                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" 
                           className={`transition-colors duration-300 ${hoveredIndex === idx ? 'text-[#f5f5f5]' : 'text-[#111]'}`}>
                         <path d="M7 17l9.2-9.2M17 17V7H7"/>
                      </svg>
                   </div>
 
+                </div>
+
+                {/* Mobile Layout (Hidden on Desktop) */}
+                <div className="flex flex-col lg:hidden w-full px-4 md:px-12 py-8 gap-5 pointer-events-none">
+                  {/* Top Row: Title & Icon */}
+                  <div className="flex justify-between items-start w-full gap-4">
+                    <h3 className="text-[32px] md:text-5xl font-black uppercase leading-[0.9] tracking-tighter text-[#111]" style={{ fontFamily: "'Aeonik TRIAL', sans-serif", transform: "scaleY(1.05)" }}>
+                      {project.title}
+                    </h3>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#111] mt-1 shrink-0">
+                      <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                    </svg>
+                  </div>
+                  
+                  {/* Middle: Image */}
+                  {project.image ? (
+                    <div className="w-full">
+                      <img src={project.image} alt={project.title} className="w-full h-auto object-cover rounded-md border border-[#111]/10" />
+                    </div>
+                  ) : (
+                    <div className="w-full aspect-video rounded-md border border-[#111]/10 flex items-center justify-center bg-[#111]/5">
+                      <span className="text-[#666] text-xs font-mono uppercase tracking-widest">Coming Soon</span>
+                    </div>
+                  )}
+
+                  {/* Bottom: Year & Category */}
+                  <div className="w-full pt-1">
+                    <span className="text-[13px] md:text-sm font-mono font-medium tracking-widest uppercase text-[#555]">
+                      {project.year}, {project.category}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

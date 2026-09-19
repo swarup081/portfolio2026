@@ -48,7 +48,7 @@ export default function PixelAnimation({ src, className }: { src: string, classN
       // Determine target image size based on screen width (matching Footer breakpoints)
       const isMobile = window.innerWidth < 768;
       const isTablet = window.innerWidth < 1024;
-      const imgTargetWidth = isMobile ? 200 : isTablet ? 280 : 350;
+      const imgTargetWidth = isMobile ? 350 : isTablet ? 350 : 350;
       const imgTargetHeight = Math.floor((img.height / img.width) * imgTargetWidth);
 
       // Center the image within the massive canvas

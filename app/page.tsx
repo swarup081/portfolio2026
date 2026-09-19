@@ -184,9 +184,6 @@ export default function Home() {
   const title1 = "SWARUP'S".split("");
   const title2 = "PORTFOLIO".split("");
 
-  const leftSideText = "Computer Science Engineer".split("");
-  const rightSideText = "B.Tech CSE NIT Silchar".split("");
-
   return (
     <div
       className="relative w-full bg-[#F5F2EB] text-[#111111] font-sans flex flex-col"
@@ -209,7 +206,7 @@ export default function Home() {
         <div className="w-full h-full max-w-[88vw] xl:max-w-[1350px] border-x border-[#b3b3b3]" />
       </div>
 
-      <div className="fixed right-0 top-1/2 -translate-y-1/2 bg-[#151515] text-white w-10 py-6 rounded-l-lg z-50 flex flex-col items-center justify-center gap-6 shadow-xl hidden md:flex border-[1.5px] border-r-0 border-white/40">
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 bg-[#151515] text-white w-10 py-6 rounded-l-lg z-50 flex flex-col items-center justify-center gap-6 shadow-xl border-[1.5px] border-r-0 border-white/40">
         <div className="relative group flex items-center justify-center cursor-pointer" onClick={() => {
           navigator.clipboard.writeText("dasswarup.work@gmail.com");
           setCopied(true);
@@ -259,7 +256,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative w-full">
+      <div id="home" className="relative w-full">
 
         {/* SECTION 1 & 2 MASTER WRAPPER (400vh so it extends while About section slides over) */}
         <div ref={masterSectionRef} className="relative w-full h-[400vh]">
@@ -283,27 +280,6 @@ export default function Home() {
                         transition={{ duration: 2.2, ease: "easeInOut" }}
                         className="h-[1px] bg-[#b3b3b3] flex-grow origin-left min-w-[10px]"
                       />
-                      <div
-                        className={`relative flex-shrink-0 hidden md:block overflow-hidden h-[40px] transition-[width,opacity] duration-[1500ms] delay-[200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${phase === 1 ? "w-[240px] lg:w-[280px] xl:w-[320px] opacity-100" : "w-0 opacity-0"
-                          }`}
-                      >
-                        <div
-                          className="absolute right-0 top-1/2 -translate-y-1/2 w-[240px] lg:w-[280px] xl:w-[320px] pr-3 sm:pr-6 md:pr-8 text-right whitespace-nowrap text-[#333] text-base md:text-lg lg:text-xl font-medium tracking-tight"
-                          style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
-                        >
-                          {leftSideText.map((char, i) => (
-                            <motion.span
-                              key={i}
-                              initial={{ y: 20, opacity: 0 }}
-                              animate={{ y: phase === 1 ? 0 : 20, opacity: phase === 1 ? 1 : 0 }}
-                              transition={{ duration: 0.6, delay: 0.4 + (leftSideText.length - 1 - i) * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                              className="inline-block"
-                            >
-                              {char === " " ? "\u00A0" : char}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
                     </div>
 
                     <div className={`flex items-center justify-center transition-all duration-1000 ${phase === 0 ? "w-[250px]" : "w-auto px-2 md:px-4"}`}>
@@ -341,27 +317,6 @@ export default function Home() {
                     </div>
 
                     <div className="flex items-center justify-start w-full min-w-0">
-                      <div
-                        className={`relative flex-shrink-0 hidden md:block overflow-hidden h-[40px] transition-[width,opacity] duration-[1500ms] delay-[200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${phase === 1 ? "w-[240px] lg:w-[280px] xl:w-[320px] opacity-100" : "w-0 opacity-0"
-                          }`}
-                      >
-                        <div
-                          className="absolute left-0 top-1/2 -translate-y-1/2 w-[240px] lg:w-[280px] xl:w-[320px] pl-3 sm:pl-6 md:pl-8 text-left whitespace-nowrap text-[#333] text-base md:text-lg lg:text-xl font-medium tracking-tight"
-                          style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
-                        >
-                          {rightSideText.map((char, i) => (
-                            <motion.span
-                              key={i}
-                              initial={{ y: 20, opacity: 0 }}
-                              animate={{ y: phase === 1 ? 0 : 20, opacity: phase === 1 ? 1 : 0 }}
-                              transition={{ duration: 0.6, delay: 0.4 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                              className="inline-block"
-                            >
-                              {char === " " ? "\u00A0" : char}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
                       <motion.div
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
@@ -492,7 +447,7 @@ export default function Home() {
                   <motion.img
                     src="/strokebg.png"
                     alt="Brush stroke"
-                    className="w-[150%] md:w-[120%] lg:w-[110%] h-auto object-contain drop-shadow-md transform -rotate-2"
+                    className="w-[200%] sm:w-[180%] md:w-[120%] lg:w-[110%] max-w-none h-auto object-contain drop-shadow-md transform -rotate-2"
                     initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)" }}
                     animate={isYellowSectionInView ? { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)" } : { clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)" }}
                     transition={{ duration: 2.5, ease: "easeInOut" }}
@@ -500,7 +455,7 @@ export default function Home() {
                 </div>
 
                 {/* Animated Skill Pills */}
-                <div className="absolute top-[65%] lg:top-[68%] left-1/2 -translate-x-1/2 w-full flex justify-center flex-wrap gap-8 md:gap-24 lg:gap-32 xl:gap-[15vw] z-30 pointer-events-auto">
+                <div className="absolute top-[66%] sm:top-[68%] lg:top-[68%] left-1/2 -translate-x-1/2 w-full flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-32 xl:gap-[15vw] z-30 pointer-events-auto">
                   <motion.div style={{ y: pillY, opacity: pillOpacity, fontFamily: "'Aeonik TRIAL', sans-serif" }} className="bg-[#151515] text-[#F5F2EB] px-8 py-3.5 md:py-4 rounded-full text-base md:text-lg lg:text-xl tracking-wide font-medium shadow-2xl border border-white/10">Web Design</motion.div>
                   <motion.div style={{ y: pillY, opacity: pillOpacity, fontFamily: "'Aeonik TRIAL', sans-serif" }} className="bg-[#151515] text-[#F5F2EB] px-8 py-3.5 md:py-4 rounded-full text-base md:text-lg lg:text-xl tracking-wide font-medium shadow-2xl border border-white/10">Web Development</motion.div>
                   <motion.div style={{ y: pillY, opacity: pillOpacity, fontFamily: "'Aeonik TRIAL', sans-serif" }} className="bg-[#151515] text-[#F5F2EB] px-8 py-3.5 md:py-4 rounded-full text-base md:text-lg lg:text-xl tracking-wide font-medium shadow-2xl border border-white/10">Engineering</motion.div>
@@ -510,7 +465,7 @@ export default function Home() {
                 <img
                   src="/heroimageswarup.png"
                   alt="Swarup"
-                  className="relative z-20 w-auto h-[90vh] md:h-[95vh] lg:h-[100vh] max-h-[1100px] object-contain object-bottom select-none drop-shadow-2xl translate-y-[1%]"
+                  className="relative z-20 w-[240%] max-w-none sm:w-[200%] md:w-auto h-auto md:h-[95vh] lg:h-[100vh] max-h-[1100px] object-contain object-bottom select-none drop-shadow-2xl md:translate-y-[1%] origin-bottom"
                 />
               </main>
             </motion.section>
@@ -520,6 +475,7 @@ export default function Home() {
 
         {/* SECTION 3: About (Dark) - Base Layer */}
         <motion.section
+          id="about"
           ref={darkSectionRef}
           className="relative min-h-screen w-full -mt-[100vh] bg-[#1E1E1E] flex flex-col items-center overflow-hidden z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.2)] text-white"
         >
@@ -587,12 +543,12 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                  className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full gap-6"
+                  className="flex flex-col xl:flex-row items-start xl:items-center justify-between w-full gap-6"
                 >
-                  <h2 className="text-[10vw] lg:text-[85px] xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
+                  <h2 className="text-[11vw] md:text-[9vw] lg:text-[7vw] xl:text-[85px] 2xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
                     HI ! I&apos;M SWARUP
                   </h2>
-                  <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pl-6">
+                  <div className="w-[280px] sm:w-[350px] xl:w-[320px] flex-shrink-0 xl:pl-6">
                     <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
                       I&apos;m a full-stack developer and Computer Science graduate from NIT Silchar, deeply focused on building scalable SaaS applications and high-traffic web platforms.
                     </p>
@@ -606,14 +562,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-                className="flex flex-col-reverse lg:flex-row items-start lg:items-center justify-between w-full gap-6"
+                className="flex flex-col-reverse xl:flex-row items-start xl:items-center justify-between w-full gap-6"
               >
-                <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pr-6">
+                <div className="w-[280px] sm:w-[350px] xl:w-[320px] flex-shrink-0 xl:pr-6">
                   <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
                     I have a proven track record in architecting independent solutions, engineering secure backends for active student organizations, and deploying platforms that scale to 10,000+ users.
                   </p>
                 </div>
-                <h2 className="text-[10vw] lg:text-[85px] xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
+                <h2 className="text-[11vw] md:text-[9vw] lg:text-[7vw] xl:text-[85px] 2xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
                   SOFTWARE DEV
                 </h2>
               </motion.div>

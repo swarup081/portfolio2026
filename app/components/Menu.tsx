@@ -1,10 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const { scrollYProgress } = useScroll();
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest > 0.94) {
+      if (isVisible) setIsVisible(false);
+      if (isOpen) setIsOpen(false);
+    } else {
+      if (!isVisible) setIsVisible(true);
+    }
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const curveVariants: any = {
@@ -34,7 +45,10 @@ export default function Menu() {
       animate={{ 
         width: isOpen ? 300 : 140, 
         height: isOpen ? 380 : 54,
-        borderRadius: isOpen ? 32 : 27
+        borderRadius: isOpen ? 32 : 27,
+        opacity: isVisible ? 1 : 0,
+        y: isVisible ? 0 : 50,
+        pointerEvents: isVisible ? "auto" : "none"
       }}
       transition={{ 
         duration: 0.7, 
@@ -101,14 +115,21 @@ export default function Menu() {
 
             {/* Main Links */}
             <div className="flex flex-col gap-2 mt-2 w-fit" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
-              {["Home", "Work", "Services", "About", "Contact"].map((item, i) => (
+              {["Home", "Work", "Stories", "About", "Contact"].map((item, i) => (
                 <motion.div
                   key={item}
                   initial={{ opacity: 0, x: -15 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}
                   className="relative cursor-pointer text-[32px] leading-none font-normal tracking-tight group overflow-hidden"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const el = document.getElementById(item.toLowerCase());
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                      setIsOpen(false);
+                    }
+                  }}
                 >
                   <div className="flex">
                     {item.split("").map((char, ci) => (
@@ -153,7 +174,8 @@ export default function Menu() {
             </div>
 
             {/* Bottom Right Hire Me CTA */}
-            <motion.button 
+            <motion.a 
+              href="mailto:dasswarup.work@gmail.com"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 1.1 }}
@@ -162,7 +184,7 @@ export default function Menu() {
               style={{ fontFamily: "'Aeonik TRIAL', sans-serif", backgroundColor: "#FFE45E" }}
             >
               HIRE ME
-            </motion.button>
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>

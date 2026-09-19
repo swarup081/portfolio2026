@@ -50,7 +50,7 @@ export default function Stats({ scrollYProgress }: { scrollYProgress: MotionValu
     <motion.div
       style={{ opacity, y }}
       // Push slightly lower to increase gap by a small bit from title
-      className="absolute bottom-4 lg:bottom-[-10px] w-full max-w-6xl mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-4 items-center gap-y-12 md:gap-y-0 pointer-events-auto"
+      className="absolute bottom-4 lg:bottom-[-10px] w-full max-w-6xl mx-auto px-4 sm:px-8 hidden lg:grid lg:grid-cols-4 items-center gap-y-12 lg:gap-y-0 pointer-events-auto"
     >
       {/* Col 1 */}
       <motion.div className="flex flex-col md:border-l border-[#b3b3b3] md:pl-8 lg:pl-10 h-auto md:h-[180px] justify-between py-2 -translate-y-4">

@@ -53,6 +53,7 @@ export default function Footer() {
       <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[88vw] xl:max-w-[1350px] border-x border-[#b3b3b3] pointer-events-none z-0" />
 
       <motion.section 
+        id="contact"
         ref={sectionRef} 
         className="relative h-screen w-full bg-[#fbe555] flex flex-col items-center justify-between overflow-hidden z-20 text-[#111]"
         style={{ clipPath, WebkitClipPath: clipPath }}
@@ -85,20 +86,20 @@ export default function Footer() {
         />
 
         {/* Main Container - Pyramid Structure */}
-        <div className="relative w-full max-w-[88vw] xl:max-w-[1350px] mx-auto border-x border-[#111]/20 flex flex-col pt-16 md:pt-20 lg:pt-24 flex-grow justify-center">
+        <div className="relative w-full max-w-[88vw] xl:max-w-[1350px] mx-auto border-x border-[#111]/20 flex flex-col pt-16 md:pt-20 lg:pt-24 flex-grow justify-end md:justify-center">
           
           {/* Massive Background Text & Pixel Art */}
-          <div className="relative w-full flex flex-col items-center justify-center pointer-events-none select-none z-0 translate-y-12 md:translate-y-24 lg:translate-y-32">
+          <div className="relative w-full flex flex-col items-center justify-center pointer-events-none select-none z-20 flex-grow translate-y-0">
             {/* Background Text */}
             <h1 
-              className="text-[28vw] md:text-[25vw] lg:text-[20vw] leading-[0.75] font-black text-center uppercase tracking-tighter text-black/5 mix-blend-multiply w-full px-4"
+              className="hidden md:block text-[28vw] md:text-[18vw] lg:text-[15vw] xl:text-[20vw] leading-[0.75] font-black text-center uppercase tracking-tighter text-black/5 mix-blend-multiply w-full px-4"
               style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
             >
               SWARUP
             </h1>
 
             {/* Pixel Art Overlay */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] z-10 w-[200px] md:w-[280px] lg:w-[350px]">
+            <div className="relative md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-[45%] z-10 w-[350px] md:w-[350px] lg:w-[300px] xl:w-[400px] translate-y-8 md:translate-y-12 xl:translate-y-0 pointer-events-none">
               <PixelAnimation src="/pixeleatedme.png" />
             </div>
           </div>
@@ -111,7 +112,7 @@ export default function Footer() {
               <div className="flex flex-col mb-12 md:mb-0">
                 <p className="text-lg md:text-xl font-medium mb-2">Let&apos;s build something</p>
                 <h2 
-                  className="text-5xl md:text-6xl lg:text-[80px] font-black uppercase tracking-tighter leading-[0.9]"
+                  className="text-[10vw] sm:text-5xl lg:text-[80px] font-black uppercase tracking-tighter leading-[0.9]"
                   style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
                 >
                   MEANINGFUL<br />AND MEMORABLE

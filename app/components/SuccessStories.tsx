@@ -31,7 +31,7 @@ export default function SuccessStories() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="w-full bg-[#F5F2EB] text-[#111111] relative flex justify-center">
+    <section id="stories" className="w-full bg-[#F5F2EB] text-[#111111] relative flex justify-center">
       <div className="w-full max-w-[88vw] xl:max-w-[1350px] mx-auto border-x border-[#b3b3b3] py-32 md:py-48">
         {/* Title */}
         <div className="mb-12 md:mb-20 px-6 md:px-12 lg:px-20">
