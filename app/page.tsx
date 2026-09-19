@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useAnimation, AnimatePresence, useMotionValue, useSpring, useMotionValueEvent } from "framer-motion";
 import Menu from "./components/Menu";
 import AboutMenu from "./components/AboutMenu";
+import CuratedProjects from "./components/CuratedProjects";
 import Stats from "./components/Stats";
 import SuccessStories from "./components/SuccessStories";
+import Footer from "./components/Footer";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function MagnifyingChar({ children, index, mouseX, mouseY, delayOffset, waveKey }: any) {
@@ -90,28 +92,15 @@ export default function Home() {
       mouseY.set(-1000);
     }
 
-    // Yellow area check
-    const isOverYellow = yellowSectionRef.current &&
-      e.clientY >= yellowSectionRef.current.getBoundingClientRect().top &&
-      e.clientY <= yellowSectionRef.current.getBoundingClientRect().bottom;
+    // Always update yellow mouse so its glow can cross the border
+    yellowMouseX.set(e.clientX);
+    yellowMouseY.set(e.clientY);
 
-    if (isOverYellow) {
-      yellowMouseX.set(e.clientX);
-      yellowMouseY.set(e.clientY);
-    } else {
-      yellowMouseX.set(-1000);
-      yellowMouseY.set(-1000);
-    }
-
-    // Dark area check
-    const isOverDark = e.clientY > window.innerHeight * 2;
-    if (isOverDark) {
-      const topOfDark = window.innerHeight * 2;
-      darkMouseX.set(e.clientX);
-      darkMouseY.set(e.clientY - topOfDark);
-    } else {
-      darkMouseX.set(-1000);
-      darkMouseY.set(-1000);
+    // Always update dark mouse so its glow can cross the border
+    if (darkSectionRef.current) {
+      const darkRect = darkSectionRef.current.getBoundingClientRect();
+      darkMouseX.set(e.clientX - darkRect.left);
+      darkMouseY.set(e.clientY - darkRect.top);
     }
   };
 
@@ -196,7 +185,7 @@ export default function Home() {
   const title2 = "PORTFOLIO".split("");
 
   const leftSideText = "Computer Science Engineer".split("");
-  const rightSideText = "Studying at NIT Silchar".split("");
+  const rightSideText = "B.Tech CSE NIT Silchar".split("");
 
   return (
     <div
@@ -600,12 +589,12 @@ export default function Home() {
                   transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                   className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full gap-6"
                 >
-                  <h2 className="text-[11.5vw] lg:text-[95px] xl:text-[125px] leading-[0.8] tracking-normal uppercase whitespace-nowrap text-white" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
+                  <h2 className="text-[10vw] lg:text-[85px] xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
                     HI ! I&apos;M SWARUP
                   </h2>
                   <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pl-6">
                     <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
-                      I&apos;ve been in the software industry crafting digital products that are useful & enjoyable for the final users.
+                      I&apos;m a full-stack developer and Computer Science graduate from NIT Silchar, deeply focused on building scalable SaaS applications and high-traffic web platforms.
                     </p>
                   </div>
                 </motion.div>
@@ -621,10 +610,10 @@ export default function Home() {
               >
                 <div className="w-[280px] lg:w-[320px] flex-shrink-0 lg:pr-6">
                   <p className="text-[#888888] text-sm lg:text-[15px] font-light leading-[1.7]">
-                    I&apos;ve worked on ambitious projects bringing design aesthetics with coding finesse to life, currently studying at NIT Silchar.
+                    I have a proven track record in architecting independent solutions, engineering secure backends for active student organizations, and deploying platforms that scale to 10,000+ users.
                   </p>
                 </div>
-                <h2 className="text-[11.5vw] lg:text-[95px] xl:text-[125px] leading-[0.8] tracking-normal uppercase whitespace-nowrap text-white" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom right" }}>
+                <h2 className="text-[10vw] lg:text-[85px] xl:text-[110px] leading-[0.9] tracking-tight uppercase whitespace-nowrap text-white font-bold" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
                   SOFTWARE DEV
                 </h2>
               </motion.div>
@@ -636,6 +625,12 @@ export default function Home() {
 
         {/* SECTION 4: Success Stories (Accordion) */}
         <SuccessStories />
+
+        {/* SECTION 5: Curated Projects */}
+        <CuratedProjects />
+
+        {/* SECTION 6: Footer */}
+        <Footer />
 
       </div>
     </div>

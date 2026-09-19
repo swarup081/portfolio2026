@@ -54,8 +54,8 @@ export default function Stats({ scrollYProgress }: { scrollYProgress: MotionValu
     >
       {/* Col 1 */}
       <motion.div className="flex flex-col md:border-l border-[#b3b3b3] md:pl-8 lg:pl-10 h-auto md:h-[180px] justify-between py-2 -translate-y-4">
-        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-0" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
-          <AnimatedCounter value={500} suffix="+" scrollYProgress={scrollYProgress} />
+        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-0" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
+          <AnimatedCounter value={100} suffix="+" scrollYProgress={scrollYProgress} />
         </span>
         <span className="text-sm lg:text-[15px] text-[#333] font-medium leading-snug">
           Engineering Problems<br />Solved
@@ -65,7 +65,7 @@ export default function Stats({ scrollYProgress }: { scrollYProgress: MotionValu
       {/* Col 2 */}
       <motion.div className="flex flex-col md:border-l border-[#b3b3b3] md:pl-8 lg:pl-10 h-auto md:h-[180px] justify-end py-2 md:pb-2 relative translate-y-8">
         <div className="absolute top-0 left-0 w-[1px] h-1/2 bg-[#F5F2EB] hidden md:block z-10 -ml-[1px]" /> {/* Masks the top half of the border */}
-        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-12" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
+        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-12" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
           <AnimatedCounter value={1.7} suffix=" L+" scrollYProgress={scrollYProgress} />
         </span>
         <span className="text-sm lg:text-[15px] text-[#333] font-medium leading-snug">
@@ -75,8 +75,8 @@ export default function Stats({ scrollYProgress }: { scrollYProgress: MotionValu
 
       {/* Col 3 */}
       <motion.div className="flex flex-col md:border-l border-[#b3b3b3] md:pl-8 lg:pl-10 h-auto md:h-[180px] justify-between py-2 -translate-y-2">
-        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-0" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
-          <AnimatedCounter value={50} suffix="+" scrollYProgress={scrollYProgress} />
+        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-8 md:mb-0" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
+          <AnimatedCounter value={25} suffix="+" scrollYProgress={scrollYProgress} />
         </span>
         <span className="text-sm lg:text-[15px] text-[#333] font-medium leading-snug">
           Full-Stack Projects<br />Shipped
@@ -85,7 +85,7 @@ export default function Stats({ scrollYProgress }: { scrollYProgress: MotionValu
 
       {/* Col 4 */}
       <motion.div className="flex flex-col md:border-l md:border-r border-[#b3b3b3] md:px-8 lg:px-10 h-auto md:h-[180px] justify-center py-2 translate-y-4">
-        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-4" style={{ fontFamily: "'Impact', 'Arial Black', sans-serif", transform: "scaleY(1.15)", transformOrigin: "bottom left" }}>
+        <span className="text-6xl lg:text-[75px] font-bold text-[#111] leading-none tracking-tight mb-4" style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}>
           <AnimatedCounter value={1000} suffix="+" scrollYProgress={scrollYProgress} />
         </span>
         <span className="text-sm lg:text-[15px] text-[#333] font-medium leading-snug">
