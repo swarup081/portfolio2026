@@ -1,11 +1,15 @@
 'use client';
 
-import { motion, useMotionValue, useTransform, useScroll } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useTransform, useScroll, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import PixelAnimation from './PixelAnimation';
 
 export default function Footer() {
   const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const isTextInView = useInView(textRef, { once: true, amount: 0.5 });
+  const [textAnimationComplete, setTextAnimationComplete] = useState(false);
+
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
 
@@ -22,6 +26,33 @@ export default function Footer() {
     [level1Offset, level2Offset, centerOffset],
     ([lvl1, lvl2, center]) => `polygon(0% ${lvl1}, 20% ${lvl1}, 20% ${lvl2}, 40% ${lvl2}, 40% ${center}, 60% ${center}, 60% ${lvl2}, 80% ${lvl2}, 80% ${lvl1}, 100% ${lvl1}, 100% 100%, 0% 100%)`
   );
+
+  const text = "SWARUP";
+  const textVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
+  };
+
+  useEffect(() => {
+    // If the screen is mobile (text is hidden), start pixel animation immediately
+    const mql = window.matchMedia('(max-width: 767px)');
+    if (mql.matches) {
+      setTextAnimationComplete(true);
+    }
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) setTextAnimationComplete(true);
+    };
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -91,16 +122,32 @@ export default function Footer() {
           {/* Massive Background Text & Pixel Art */}
           <div className="relative w-full flex flex-col items-center justify-center pointer-events-none select-none z-20 flex-grow translate-y-0">
             {/* Background Text */}
-            <h1 
-              className="hidden md:block text-[28vw] md:text-[18vw] lg:text-[15vw] xl:text-[20vw] leading-[0.75] font-black text-center uppercase tracking-tighter text-black/5 mix-blend-multiply w-full px-4"
+            <motion.h1 
+              ref={textRef}
+              className="hidden md:flex justify-center text-[28vw] md:text-[18vw] lg:text-[15vw] xl:text-[20vw] leading-[0.75] font-black text-center uppercase tracking-tighter text-black/5 mix-blend-multiply w-full px-4"
               style={{ fontFamily: "'Aeonik TRIAL', sans-serif" }}
             >
-              SWARUP
-            </h1>
+              {text.split('').map((char, index) => (
+                <motion.span
+                  key={index}
+                  custom={index}
+                  initial="hidden"
+                  animate={isTextInView ? "visible" : "hidden"}
+                  variants={textVariants}
+                  onAnimationComplete={() => {
+                    if (index === text.length - 1) {
+                      setTextAnimationComplete(true);
+                    }
+                  }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.h1>
 
             {/* Pixel Art Overlay */}
             <div className="relative md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-[45%] z-10 w-[350px] md:w-[350px] lg:w-[300px] xl:w-[400px] translate-y-8 md:translate-y-12 xl:translate-y-0 pointer-events-none">
-              <PixelAnimation src="/pixeleatedme.png" />
+              <PixelAnimation src="/pixeleatedme.png" startAnimation={textAnimationComplete} />
             </div>
           </div>
 

@@ -12,14 +12,13 @@ interface Particle {
   speed: number;
 }
 
-export default function PixelAnimation({ src, className }: { src: string, className?: string }) {
+export default function PixelAnimation({ src, className, startAnimation = true }: { src: string, className?: string, startAnimation?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (!isInView || !canvasRef.current || isLoaded) return;
+    if (!isInView || !canvasRef.current || !startAnimation) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -41,6 +40,8 @@ export default function PixelAnimation({ src, className }: { src: string, classN
 
     ctx.scale(dpr, dpr);
     ctx.imageSmoothingEnabled = false;
+
+    let animationFrameId: number;
 
     const img = new Image();
     img.src = src;
@@ -69,7 +70,7 @@ export default function PixelAnimation({ src, className }: { src: string, classN
       const data = imageData.data;
 
       const particles: Particle[] = [];
-      const chunkSize = 2; // Reverted back to 2 for detailed assembly
+      const chunkSize = isMobile ? 1 : 2; // Use 1 for mobile to prevent blocky pixelation
       
       for (let y = 0; y < imgTargetHeight; y += chunkSize) {
         for (let x = 0; x < imgTargetWidth; x += chunkSize) {
@@ -94,9 +95,7 @@ export default function PixelAnimation({ src, className }: { src: string, classN
         }
       }
 
-      setIsLoaded(true);
-
-      let animationFrameId: number;
+      let fadeOpacity = 0;
       
       const animate = () => {
         ctx.clearRect(0, 0, logicalWidth, logicalHeight);
@@ -127,20 +126,30 @@ export default function PixelAnimation({ src, className }: { src: string, classN
         if (settledCount < particles.length) {
           animationFrameId = requestAnimationFrame(animate);
         } else {
-          // PERFECT FINAL STATE: Draw the pristine original image scaled to target width
-          ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-          ctx.imageSmoothingEnabled = false;
-          ctx.drawImage(img, offsetX, offsetY, imgTargetWidth, imgTargetHeight);
+          // Transition smoothly to pristine image
+          fadeOpacity += 0.05;
+          if (fadeOpacity <= 1) {
+            ctx.globalAlpha = fadeOpacity;
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(img, offsetX, offsetY, imgTargetWidth, imgTargetHeight);
+            ctx.globalAlpha = 1.0;
+            animationFrameId = requestAnimationFrame(animate); // Keep looping to fade in
+          } else {
+            // Final state
+            ctx.globalAlpha = 1.0;
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(img, offsetX, offsetY, imgTargetWidth, imgTargetHeight);
+          }
         }
       };
 
       animate();
-
-      return () => {
-        cancelAnimationFrame(animationFrameId);
-      };
     };
-  }, [isInView, src, isLoaded]);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isInView, src, startAnimation]);
 
   return (
     <div ref={containerRef} className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vh] flex justify-center items-center pointer-events-none ${className || ''}`}>

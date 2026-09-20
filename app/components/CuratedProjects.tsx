@@ -24,7 +24,7 @@ const projects = [
     year: "2026",
     title: "Incand26",
     logoImage: "/incandlogo.ico",
-    category: "MARKETING WEBSITE",
+    category: "FESTIVAL EVENTS",
     image: "/incandhome.png",
     link: "https://www.incand.in/"
   },
@@ -32,7 +32,7 @@ const projects = [
     year: "2025",
     title: "E-Cell Website",
     logoText: "E-Cell Website",
-    category: "MARKETING WEBSITE",
+    category: "CLUB WEBSITE",
     image: "/ecellhome.png",
     link: "https://www.ecellnits.org/"
   },
