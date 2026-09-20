@@ -19,7 +19,7 @@ const stories = [
     result: "Successfully modeled the payment ecosystem and generated 30,000+ synthetic transactions, providing real-time analytics and robust end-to-end system validation."
   },
   {
-    category: "Junior Technical Member (Aug 2025 - Present)",
+    category: "Technical Head (Aug 2025 - Present)",
     title: "E-CELL FULL-STACK PLATFORM",
     challenge: "The organization lacked a secure backend infrastructure and struggled with platform performance, limiting visibility and digital user acquisition.",
     solution: "Developed the backend from scratch, integrated strict Google Sign-In authentication, and deployed a high-performance frontend landing page.",
