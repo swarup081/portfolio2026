@@ -147,7 +147,7 @@ export default function Footer() {
 
             {/* Pixel Art Overlay */}
             <div className="relative md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-[45%] z-10 w-[350px] md:w-[350px] lg:w-[300px] xl:w-[400px] translate-y-8 md:translate-y-12 xl:translate-y-0 pointer-events-none">
-              <PixelAnimation src="/pixeleatedme.png" startAnimation={textAnimationComplete} />
+              <PixelAnimation src="/pixeleatedme.webp" startAnimation={textAnimationComplete} />
             </div>
           </div>
 

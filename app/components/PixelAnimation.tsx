@@ -56,25 +56,31 @@ export default function PixelAnimation({ src, className, startAnimation = true }
       const offsetX = (logicalWidth - imgTargetWidth) / 2;
       const offsetY = (logicalHeight - imgTargetHeight) / 2;
 
-      // Draw onto hidden canvas to extract pixel data
+      // The image is now highly compressed, so we can afford 1:1 resolution scale
+      // without heavy network lag. We still use image smoothing for the downscale 
+      // from 700px -> 350px so it perfectly antialiases.
+      const resolutionScale = 1.0; 
+      const hiddenWidth = Math.floor(imgTargetWidth * resolutionScale);
+      const hiddenHeight = Math.floor(imgTargetHeight * resolutionScale);
+
       const hiddenCanvas = document.createElement('canvas');
-      hiddenCanvas.width = imgTargetWidth;
-      hiddenCanvas.height = imgTargetHeight;
+      hiddenCanvas.width = hiddenWidth;
+      hiddenCanvas.height = hiddenHeight;
       const hiddenCtx = hiddenCanvas.getContext('2d');
       if (!hiddenCtx) return;
       
-      hiddenCtx.imageSmoothingEnabled = false;
-      hiddenCtx.drawImage(img, 0, 0, imgTargetWidth, imgTargetHeight);
+      hiddenCtx.imageSmoothingEnabled = true; // MUST be true to prevent jagged aliasing
+      hiddenCtx.drawImage(img, 0, 0, hiddenWidth, hiddenHeight);
       
-      const imageData = hiddenCtx.getImageData(0, 0, imgTargetWidth, imgTargetHeight);
+      const imageData = hiddenCtx.getImageData(0, 0, hiddenWidth, hiddenHeight);
       const data = imageData.data;
 
       const particles: Particle[] = [];
-      const chunkSize = isMobile ? 1 : 2; // Use 1 for mobile to prevent blocky pixelation
+      const particleRenderSize = 1 / resolutionScale; // 2 logical pixels
       
-      for (let y = 0; y < imgTargetHeight; y += chunkSize) {
-        for (let x = 0; x < imgTargetWidth; x += chunkSize) {
-          const index = (y * imgTargetWidth + x) * 4;
+      for (let y = 0; y < hiddenHeight; y++) {
+        for (let x = 0; x < hiddenWidth; x++) {
+          const index = (y * hiddenWidth + x) * 4;
           const a = data[index + 3];
 
           if (a > 10) {
@@ -84,8 +90,8 @@ export default function PixelAnimation({ src, className, startAnimation = true }
             
             // Scatter completely across the massive canvas bounds
             particles.push({
-              originX: x + offsetX,
-              originY: y + offsetY,
+              originX: (x * particleRenderSize) + offsetX,
+              originY: (y * particleRenderSize) + offsetY,
               x: Math.random() * logicalWidth,
               y: Math.random() * logicalHeight,
               color: `rgba(${r},${g},${b},${a / 255})`,
@@ -120,7 +126,7 @@ export default function PixelAnimation({ src, className, startAnimation = true }
 
           ctx.fillStyle = p.color;
           // Math.round forces strict pixel grid alignment preventing subpixel blur
-          ctx.fillRect(Math.round(p.x), Math.round(p.y), chunkSize, chunkSize);
+          ctx.fillRect(Math.round(p.x), Math.round(p.y), particleRenderSize, particleRenderSize);
         }
 
         if (settledCount < particles.length) {
